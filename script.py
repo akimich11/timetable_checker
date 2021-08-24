@@ -8,12 +8,6 @@ from selenium.common.exceptions import WebDriverException
 
 bot = telebot.TeleBot(token='1934090305:AAEQVPnZer-7TBMEwbTW_1n3pS3PBBELcmg')
 
-if __name__ == '__main__':
-	bot.send_message(270241310, 'started')
-	while True:
-		check_timetable(-452095269, False)
-		sleep(60)
-
 
 def check_timetable(chat_id, manual_check=True):
 	if manual_check:
@@ -35,6 +29,13 @@ def check_timetable(chat_id, manual_check=True):
 	except WebDriverException:
 		bot.send_message(270241310, 'Беда с селениумом:\n' + traceback.format_exc())
 	driver.quit()
+
+
+if __name__ == '__main__':
+	bot.send_message(270241310, 'started')
+	while True:
+		check_timetable(-452095269, False)
+		sleep(60)
 
 
 @bot.message_handler(commands=['check'])
