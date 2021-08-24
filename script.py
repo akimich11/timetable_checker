@@ -31,13 +31,6 @@ def check_timetable(chat_id, manual_check=True):
 	driver.quit()
 
 
-if __name__ == '__main__':
-	bot.send_message(270241310, 'started')
-	while True:
-		check_timetable(-452095269, False)
-		sleep(60)
-
-
 @bot.message_handler(commands=['check'])
 def check_response(message):
 	check_timetable(message.chat.id)
@@ -53,3 +46,10 @@ def start_checking(message):
 
 
 bot.polling(none_stop=True)
+
+
+if __name__ == '__main__':
+	bot.send_message(270241310, 'started')
+	while True:
+		check_timetable(-452095269, False)
+		sleep(60)
