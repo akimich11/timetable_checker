@@ -9,7 +9,6 @@ from selenium.common.exceptions import WebDriverException
 
 bot = telebot.TeleBot(token='1934090305:AAEQVPnZer-7TBMEwbTW_1n3pS3PBBELcmg')
 AKIM_ID = 270241310
-CHAT_ID = -452095269
 
 
 def check_timetable(chat_id, manual_check=True):
@@ -36,7 +35,7 @@ def check_timetable(chat_id, manual_check=True):
 
 def periodic_check():
     while True:
-        check_timetable(CHAT_ID, False)
+        check_timetable(AKIM_ID, False)
         sleep(60)
 
 
