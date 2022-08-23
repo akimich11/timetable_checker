@@ -4,6 +4,7 @@ from threading import Thread
 import telebot
 from selenium import webdriver
 from time import sleep
+import sys
 
 from selenium.common.exceptions import WebDriverException
 
@@ -17,15 +18,14 @@ def check_timetable(chat_id, manual_check=True):
     driver = webdriver.PhantomJS()
     driver.get('http://fpmi.bsu.by/ru/main.aspx?guid=20381')
     try:
-        driver.find_element_by_id('__tab_Tabs_2801_ctl02').click()
-        div_block = driver.find_element_by_id('Tabs_2801_ctl02')
+        driver.find_element_by_id('__tab_Tabs_2801_ctl03').click()
+        div_block = driver.find_element_by_id('Tabs_2801_ctl03')
         refs = div_block.find_elements_by_tag_name('a')
         found = False
         for ref in refs:
             if ref.text.lower().startswith('расписание'):
                 bot.send_message(chat_id, ref.get_property('href'))
-                found = True
-                break
+                return True
         if not found and manual_check:
             bot.send_message(chat_id, 'пока расписания нет')
     except WebDriverException:
@@ -35,8 +35,11 @@ def check_timetable(chat_id, manual_check=True):
 
 def periodic_check():
     while True:
-        check_timetable(AKIM_ID, False)
-        sleep(60)
+        found = check_timetable(AKIM_ID, False)
+        if not found:
+            sleep(60)
+        else:
+            sys.exit(0)
 
 
 if __name__ == '__main__':
